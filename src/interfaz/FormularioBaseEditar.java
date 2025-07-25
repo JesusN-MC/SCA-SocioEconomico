@@ -263,7 +263,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
 
         botonGuardar.setBackground(new java.awt.Color(153, 255, 153));
         botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonGuardar.setText("Guardar");
+        botonGuardar.setText("Guardar Avance");
         botonGuardar.setBorderPainted(false);
         botonGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -279,8 +279,8 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(BotonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE)
+                .addComponent(botonGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
