@@ -25,6 +25,7 @@ private static final java.util.logging.Logger logger = java.util.logging.Logger.
         
         
         initComponents();
+        setLocationRelativeTo(null);
         DarEstilos();
         setVisible(true);
         setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);

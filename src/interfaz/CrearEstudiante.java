@@ -46,16 +46,16 @@ public class CrearEstudiante extends javax.swing.JFrame {
     public void DarEstilos(){
       
       btnlogo.setBorderPainted(false);
-      txtNombre.putClientProperty("JComponent.roundRect", true);
+      //txtNombre.putClientProperty("JComponent.roundRect", true);
       
-      txtMatricula.putClientProperty("JComponent.roundRect", true);
+      //txtMatricula.putClientProperty("JComponent.roundRect", true);
       
-      txtGrupo.putClientProperty("JComponent.roundRect", true);
+      //txtGrupo.putClientProperty("JComponent.roundRect", true);
       
       //comboboxCarrera.putClientProperty("JComponent.roundRect", true);
-      comboboxCarrera.putClientProperty("JComponent.roundRect", true);
+      //comboboxCarrera.putClientProperty("JComponent.roundRect", true);
                 
-      comboSexo.putClientProperty("JComponent.roundRect", true);
+      //comboSexo.putClientProperty("JComponent.roundRect", true);
                 
       comboSexo.addItem("F");
       comboSexo.addItem("M");
@@ -271,6 +271,11 @@ public class CrearEstudiante extends javax.swing.JFrame {
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 720, 130));
 
         txtNombre.setBackground(new java.awt.Color(204, 204, 204));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 160, -1));
 
         txtMatricula.setBackground(new java.awt.Color(204, 204, 204));
@@ -420,6 +425,10 @@ public class CrearEstudiante extends javax.swing.JFrame {
     private void comboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSexoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboSexoActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments

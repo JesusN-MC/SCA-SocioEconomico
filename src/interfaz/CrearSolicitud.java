@@ -92,36 +92,36 @@ public class CrearSolicitud extends javax.swing.JFrame {
                 campoFecha.putClientProperty("JComponent.roundRect", true);
                 
                 campoEstatus.setText("En Creacion");
-                campoEstatus.putClientProperty("JComponent.roundRect", true);
+                //campoEstatus.putClientProperty("JComponent.roundRect", true);
                 campoEstatus.setEditable(false);
-                campoNombre.putClientProperty("JComponent.roundRect", true);
+                //campoNombre.putClientProperty("JComponent.roundRect", true);
                 campoNombre.setEditable(false);
                 
-                campoMatricula.putClientProperty("JComponent.roundRect", true);
+                //campoMatricula.putClientProperty("JComponent.roundRect", true);
                 campoMatricula.setEditable(false);
                 
-                campoGrupo.putClientProperty("JComponent.roundRect", true);
+                //campoGrupo.putClientProperty("JComponent.roundRect", true);
                 
                 
-                campoCarrera.putClientProperty("JComponent.roundRect", true);
+                //campoCarrera.putClientProperty("JComponent.roundRect", true);
                 campoCarrera.setEditable(false);
                 
-                campoCanaliza.putClientProperty("JComponent.roundRect", true);
+                //campoCanaliza.putClientProperty("JComponent.roundRect", true);
                 
-                campoTelefono.putClientProperty("JComponent.roundRect", true);
+                //campoTelefono.putClientProperty("JComponent.roundRect", true);
                 
-                campoFamiliar.putClientProperty("JComponent.roundRect", true);
+                /*campoFamiliar.putClientProperty("JComponent.roundRect", true);
                 
                 campoTelefonoFamiliar.putClientProperty("JComponent.roundRect", true);
                 
-                comboMotivo.putClientProperty("JComponent.roundRect", true);
+                comboMotivo.putClientProperty("JComponent.roundRect", true);*/
                 comboMotivo.addItem("Socioeconomico");
                 comboMotivo.addItem("Salud");
                 comboMotivo.addItem("Familiar");
                 
-                campoArgumentacion.putClientProperty("JComponent.roundRect", true);
+                //campoArgumentacion.putClientProperty("JComponent.roundRect", true);
                 
-                comboTipo.putClientProperty("JComponent.roundRect", true);
+                //comboTipo.putClientProperty("JComponent.roundRect", true);*/
                 comboTipo.addItem("Llamada");
                 comboTipo.addItem("Oficina");
                 comboTipo.addItem("Visita");

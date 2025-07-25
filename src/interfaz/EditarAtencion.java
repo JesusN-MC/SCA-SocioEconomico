@@ -196,27 +196,27 @@ public class EditarAtencion extends javax.swing.JFrame {
         CampoFecha.putClientProperty("JComponent.roundRect", true);
         CampoFecha.setEditable(false);
         
-        campoMotivo.putClientProperty("JComponent.roundRect", true);
+        //campoMotivo.putClientProperty("JComponent.roundRect", true);
         campoMotivo.setEditable(false);
         
-        campoTipo.putClientProperty("JComponent.roundRect", true);
+        //campoTipo.putClientProperty("JComponent.roundRect", true);
         campoTipo.setEditable(false);
         
-        campoCanalizacion.putClientProperty("JComponent.roundRect", true);
+        //campoCanalizacion.putClientProperty("JComponent.roundRect", true);
         campoCanalizacion.setEditable(false);
         
-        comboEstatus.putClientProperty("JComponent.roundRect", true);
+        //comboEstatus.putClientProperty("JComponent.roundRect", true);
         
-        campoNombre.putClientProperty("JComponent.roundRect", true);
+        //campoNombre.putClientProperty("JComponent.roundRect", true);
         campoNombre.setEditable(false);
         
-        campoMatricula.putClientProperty("JComponent.roundRect", true);
+        //campoMatricula.putClientProperty("JComponent.roundRect", true);
         campoMatricula.setEditable(false);
         
-        campoGrupo.putClientProperty("JComponent.roundRect", true);
+        //campoGrupo.putClientProperty("JComponent.roundRect", true);
         campoGrupo.setEditable(false);
         
-        campoCarrera.putClientProperty("JComponent.roundRect", true);
+        //campoCarrera.putClientProperty("JComponent.roundRect", true);
         campoCarrera.setEditable(false);
     }
     

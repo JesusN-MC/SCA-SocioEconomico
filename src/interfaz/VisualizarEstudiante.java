@@ -160,13 +160,13 @@ public class VisualizarEstudiante extends javax.swing.JFrame {
       btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regresar.png")));
       btnlogo.setBorderPainted(false);
         
-      txtNombre.putClientProperty("JComponent.roundRect", true);
+      /*txtNombre.putClientProperty("JComponent.roundRect", true);
       
       txtMatricula.putClientProperty("JComponent.roundRect", true);
       
       txtGrupo.putClientProperty("JComponent.roundRect", true);
       
-      txtCarrera.putClientProperty("JComponent.roundRect", true);
+      txtCarrera.putClientProperty("JComponent.roundRect", true);*/
 
     }
     public void cargarDatos(int idAlumno){
@@ -350,13 +350,13 @@ public class VisualizarEstudiante extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jLabel2.setText("Matricula:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, -1, -1));
 
         jLabel3.setText("Grupo:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 80, -1, -1));
 
         jLabel4.setText("Carrera:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, 50, -1));
 
         jPanel9.setBackground(new java.awt.Color(204, 204, 204));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -406,19 +406,29 @@ public class VisualizarEstudiante extends javax.swing.JFrame {
 
         txtNombre.setEditable(false);
         txtNombre.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 160, -1));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 230, -1));
 
         txtMatricula.setEditable(false);
         txtMatricula.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, 100, -1));
+        jPanel1.add(txtMatricula, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 100, -1));
 
         txtGrupo.setEditable(false);
         txtGrupo.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.add(txtGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, 80, -1));
+        jPanel1.add(txtGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 100, 80, -1));
 
         txtCarrera.setEditable(false);
         txtCarrera.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 100, 230, -1));
+        txtCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCarreraActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 190, -1));
 
         jPanel5.setBackground(new java.awt.Color(43, 138, 127));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -461,6 +471,14 @@ public class VisualizarEstudiante extends javax.swing.JFrame {
         re.setLocationRelativeTo(null);
         dispose();   
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCarreraActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     /**
      * @param args the command line arguments
