@@ -49,9 +49,16 @@ public class Solicitud {
         this.tipo = tipo;
         this.argumentacion = argumentacion;
     }
-    
-    
 
+    public Solicitud(int idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
+
+    public void setIdSolicitud(int idSolicitud) {
+        this.idSolicitud = idSolicitud;
+    }
+
+    
     public int getIdSolicitud() {
         return idSolicitud;
     }
@@ -120,4 +127,23 @@ public class Solicitud {
             return false;
         }
     }
+    
+    public boolean Actualizar(){
+        try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "UPDATE solicitud SET estatus = 1 WHERE idSolicitud = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idSolicitud);
+            ps.executeUpdate();
+            
+            return true;
+            
+        }catch(Exception e){
+            showMessageDialog(null, "Error al actualizar el estatus en solicitud");
+            return false;
+        }
+    }
+
 }
