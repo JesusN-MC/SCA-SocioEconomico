@@ -5,6 +5,7 @@
 package interfaz;
 import clases.Atencion;
 import clases.Conexion;
+import clases.Solicitud;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -36,19 +37,22 @@ public class EditarAtencion extends javax.swing.JFrame {
         existe = consultarAtencion(idsoli);
         initComponents();
         DarEstilos();
-        if(existe){
-            cargarDatos(idSolicitud);
-        }else{
-            iniciarAtencion(idSolicitud);
-            cargarDatos(idSolicitud);
-        }
         
         this.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                cargarDatos(idSolicitud);
+                refrescar(idSolicitud);
             }
         });
+    }
+    
+    public void refrescar(String idS){
+        if(existe){
+            cargarDatos(idS);
+        }else{
+            iniciarAtencion(idS);
+            cargarDatos(idS);
+        }
     }
     
     public void iniciarAtencion(String idSolicitud){
@@ -140,18 +144,17 @@ public class EditarAtencion extends javax.swing.JFrame {
             
             //PENDIENTE EL ESTATUS 
             String estatus = datos.getString("estatus");
+            comboEstatus.removeAllItems();
             if(estatus.equals("1")){
                 comboEstatus.addItem("Formulario Pendiente");
             }else if(estatus.equals("2")){
                 comboEstatus.addItem("Esperando Respuesta");
                 comboEstatus.addItem("Aprobado");
                 comboEstatus.addItem("Rechazado");
-            }
-                
-            if(estatus.equals("3")){
+                System.out.println("llego a esta parte del combo");
+            }else if(estatus.equals("3")){
                 comboEstatus.addItem("Aprobado");
                 notificado.setEnabled(true);
-                
             }else if(estatus.equals("4")){
                 comboEstatus.addItem("Rechazado");
                 notificado.setEnabled(true);
@@ -696,12 +699,26 @@ public class EditarAtencion extends javax.swing.JFrame {
             noti = "0";
         }
         String id = idsoli;
+       
      
         String resumen = campoResumen.getText();
         
         Atencion at = new Atencion(estatus, noti, id, resumen);
         if(at.actualizar()){
             showMessageDialog(null, "Guardado" );
+            
+            if(noti.equals("1") && (estatus.equals("3") || estatus.equals("4") )){
+                int idSoli = Integer.parseInt(id);
+                Solicitud s = new Solicitud(idSoli);
+                if(s.Actualizar()){
+                    showMessageDialog(null, "Atencion Completada de Manera Exitosa");
+                    regresar.setVisible(true);
+                    dispose();
+                }
+            }else{
+                this.refrescar(id);
+            }
+            
         }else{
             showMessageDialog(null, "estatus: " + estatus + " notificado: "+ noti+ " id: "+ id + " resumen: " + resumen );
         } 
