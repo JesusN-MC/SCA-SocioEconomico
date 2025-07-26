@@ -191,9 +191,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 
                 apartado1(datos.getInt("id_datosAlumno"));
                 apartado2(datos.getInt("id_condicionesVivienda"));
-                apartado3(datos.getInt("id_gastos"));
-                apartado4(datos.getInt("id_datosFamiliaresF"));
-                apartado5(datos.getInt("id_datosFamiliaresM"));
+                apartadoGastosEstudiante(datos.getInt("id_gastos"));
+                apartadoDatosFamiliarF(datos.getInt("id_datosFamiliaresF"));
+                apartadoDatosFamiliarM(datos.getInt("id_datosFamiliaresM"));
                 
                 
                 
@@ -271,7 +271,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 
                 int plantas = datos.getInt("numeroPlantas");
                 if(plantas != 0){
-                    txtNumPlantas.setText(plantas + "");
+                    txtNumeroPlantas.setText(plantas + "");
                 }
                 
                 String ec = datos.getString("laCasaEs");
@@ -281,7 +281,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 
                 String piezas = datos.getString("piezas");
                 if(piezas != null){
-                    txtNumPiezasCasa.setText(piezas);
+                    txtPiezas.setText(piezas);
                 }
                 
                 String cuartod = datos.getString("cuartosDormir");
@@ -306,12 +306,12 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 
                 int ni = datos.getInt("cantidadIntegrantes");
                 if(ni != 0){
-                    txtNumIntegrantes.setText(ni + "");
+                    txtCantIntegrantes.setText(ni + "");
                 }
                 
                 String tr = datos.getString("informacionTraslado");
                 if(tr != null){
-                    txtTraslado.setText(tr);
+                    txtInfoTraslado.setText(tr);
                 }
                 
                 String et = datos.getString("espacioTareas");
@@ -321,7 +321,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 
                 String enf = datos.getString("enfermedades");
                 if(enf != null){
-                    txtEnfermedad.setText(enf);
+                    txtEnfermedades.setText(enf);
                 }
                 
                 String agua = datos.getString("agua");
@@ -415,15 +415,52 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         }
     }
     
-    public void apartado3(int id){
+    public void apartadoGastosEstudiante(int id){
+        try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT * FROM informacionGastosEstudiante WHERE id_informacionGastosEstudiante = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet datos = ps.executeQuery();
+            
+            if(datos.next()){
+                txtEstadoCivil.setText(datos.getString("estadoCivil"));
+                txtNombreEspos.setText(datos.getString("nombres"));
+                txtApaternoEspo.setText(datos.getString("ap"));
+                txtAmaternoEspos.setText(datos.getString("am"));
+                txtTrabajaEspos.setText(datos.getString("trabaja"));
+                txtTiempoCasados.setText(datos.getString("tiempoCasados"));
+                txtHijos.setText(datos.getString("hijos"));
+                txtNumHijos.setText(datos.getString("cantidadHijos"));
+                txtUstedTrabaja.setText(datos.getString("ustedTrabaja"));
+                txtDonde.setText(datos.getString("donde"));
+                txtHorario.setText(datos.getString("horario"));
+                txtCosteaGastos.setText(datos.getString("costeaGastos"));
+                txtGastosPersonales.setText(datos.getString("gastrosPersonales"));
+                txtBeca.setText(datos.getString("beca"));
+                txtCualBeca.setText(datos.getString("cual"));
+                txtPreparatoria.setText(datos.getString("preparatoria"));
+                txtLocalidadPrep.setText(datos.getString("localidad"));
+                txtAñoEgreso.setText(datos.getString("añoEgreso"));
+                txtTiempoLibre.setText(datos.getString("tiempoLibre"));
+                txtAdicciones.setText(datos.getString("addiciones"));
+                
+            }
+                    
+        }catch(Exception e){
+            System.out.println("error al Cargar Informacion de Gastos");
+        }
         
     }
     
-    public void apartado4(int id){
+    public void apartadoDatosFamiliarF(int id){
         
     }
     
-    public void apartado5(int id){
+    public void apartadoDatosFamiliarM(int id){
         
     }
 
@@ -465,15 +502,13 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         carrera1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        txtNumeroCasaAlumno = new javax.swing.JTextField();
+        txtNumCasaAlumno = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtMunicipioAlumno = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txtEstadoAlumno = new javax.swing.JTextField();
+        txtEntidadAlumno = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-
         familiar1 = new javax.swing.JTextField();
-
         txtCalleAlumno = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtColoniaAlumno = new javax.swing.JTextField();
@@ -489,9 +524,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         cbxTejas = new javax.swing.JCheckBox();
         cbxCarton = new javax.swing.JCheckBox();
         jLabel24 = new javax.swing.JLabel();
-
         tel1 = new javax.swing.JTextField();
-
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -502,7 +535,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         txtTiempoCasados = new javax.swing.JTextField();
         jLabel32 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        txtCuartosDormir = new javax.swing.JTextField();
+        txtNumCuartosDormir = new javax.swing.JTextField();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
@@ -633,7 +666,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         txtCuartoPropio = new javax.swing.JTextField();
         txtCantIntegrantes = new javax.swing.JTextField();
         txtCompartidoCon = new javax.swing.JTextField();
-        txtLaCasaEs = new javax.swing.JTextField();
+        txtEstadoCasa = new javax.swing.JTextField();
         txtPatioCochera = new javax.swing.JTextField();
         txtPiezas = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -783,14 +816,11 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         fecha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         fecha.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fechaActionPerformed(evt);
             }
         });
-
-        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 130, 30));
-
+        CuerpoFormulario.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 130, 30));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Religion:");
@@ -804,7 +834,6 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         });
         CuerpoFormulario.add(txtReligion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, 170, 30));
 
-
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setText("Nombre:");
         CuerpoFormulario.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 70, -1));
@@ -815,9 +844,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 nombre1ActionPerformed(evt);
             }
         });
-
-        jPanel1.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 380, 30));
-
+        CuerpoFormulario.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 380, 30));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Localidad:");
@@ -837,9 +864,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 grupo1ActionPerformed(evt);
             }
         });
-
-        jPanel1.add(grupo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 80, 30));
-
+        CuerpoFormulario.add(grupo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 80, 30));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Grupo:");
@@ -855,21 +880,19 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 carrera1ActionPerformed(evt);
             }
         });
-
-        jPanel1.add(carrera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
-
+        CuerpoFormulario.add(carrera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel13.setText("Número de casa:");
         CuerpoFormulario.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 450, 130, -1));
 
-        txtNumeroCasaAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtNumeroCasaAlumno.addActionListener(new java.awt.event.ActionListener() {
+        txtNumCasaAlumno.setBackground(new java.awt.Color(195, 210, 197));
+        txtNumCasaAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumeroCasaAlumnoActionPerformed(evt);
+                txtNumCasaAlumnoActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtNumeroCasaAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 130, 30));
+        CuerpoFormulario.add(txtNumCasaAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 480, 130, 30));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel14.setText("Municipio:");
@@ -887,13 +910,13 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel15.setText("Estado:");
         CuerpoFormulario.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 70, -1));
 
-        txtEstadoAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtEstadoAlumno.addActionListener(new java.awt.event.ActionListener() {
+        txtEntidadAlumno.setBackground(new java.awt.Color(195, 210, 197));
+        txtEntidadAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoAlumnoActionPerformed(evt);
+                txtEntidadAlumnoActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtEstadoAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 230, 30));
+        CuerpoFormulario.add(txtEntidadAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 230, 30));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel16.setText("Contacto Familiar:");
@@ -905,8 +928,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 familiar1ActionPerformed(evt);
             }
         });
-        jPanel1.add(familiar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 560, 230, 30));
-
+        CuerpoFormulario.add(familiar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 560, 230, 30));
 
         txtCalleAlumno.setBackground(new java.awt.Color(195, 210, 197));
         txtCalleAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -934,9 +956,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 contactoF1ActionPerformed(evt);
             }
         });
-
-        jPanel1.add(contactoF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, 180, 30));
-
+        CuerpoFormulario.add(contactoF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, 180, 30));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel19.setText("¿De que material está hecho la casa?");
@@ -1013,8 +1033,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                 tel1ActionPerformed(evt);
             }
         });
-        jPanel1.add(tel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 230, 30));
-
+        CuerpoFormulario.add(tel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 230, 30));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel25.setText("Observaciones de la vivienda:");
@@ -1064,13 +1083,13 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel28.setText("¿De cuantas piezas de conforma la casa?");
         CuerpoFormulario.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 810, 290, -1));
 
-        txtCuartosDormir.setBackground(new java.awt.Color(195, 210, 197));
-        txtCuartosDormir.addActionListener(new java.awt.event.ActionListener() {
+        txtNumCuartosDormir.setBackground(new java.awt.Color(195, 210, 197));
+        txtNumCuartosDormir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCuartosDormirActionPerformed(evt);
+                txtNumCuartosDormirActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtCuartosDormir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 840, 80, 30));
+        CuerpoFormulario.add(txtNumCuartosDormir, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 840, 80, 30));
 
         jLabel33.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel33.setText("¿Tiene cuarto propio?");
@@ -1856,13 +1875,13 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         });
         CuerpoFormulario.add(txtCompartidoCon, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 930, 120, 30));
 
-        txtLaCasaEs.setBackground(new java.awt.Color(195, 210, 197));
-        txtLaCasaEs.addActionListener(new java.awt.event.ActionListener() {
+        txtEstadoCasa.setBackground(new java.awt.Color(195, 210, 197));
+        txtEstadoCasa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLaCasaEsActionPerformed(evt);
+                txtEstadoCasaActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtLaCasaEs, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 760, 180, 30));
+        CuerpoFormulario.add(txtEstadoCasa, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 760, 180, 30));
 
         txtPatioCochera.setBackground(new java.awt.Color(195, 210, 197));
         txtPatioCochera.addActionListener(new java.awt.event.ActionListener() {
@@ -1906,9 +1925,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPatioCocheraActionPerformed
 
-    private void txtLaCasaEsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLaCasaEsActionPerformed
+    private void txtEstadoCasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoCasaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLaCasaEsActionPerformed
+    }//GEN-LAST:event_txtEstadoCasaActionPerformed
 
     private void txtCompartidoConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCompartidoConActionPerformed
         // TODO add your handling code here:
@@ -2158,9 +2177,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxMaterialActionPerformed
 
-    private void txtCuartosDormirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuartosDormirActionPerformed
+    private void txtNumCuartosDormirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCuartosDormirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCuartosDormirActionPerformed
+    }//GEN-LAST:event_txtNumCuartosDormirActionPerformed
 
     private void txtTiempoCasadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoCasadosActionPerformed
         // TODO add your handling code here:
@@ -2214,17 +2233,17 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     }//GEN-LAST:event_familiar1ActionPerformed
 
 
-    private void txtEstadoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoAlumnoActionPerformed
+    private void txtEntidadAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntidadAlumnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoAlumnoActionPerformed
+    }//GEN-LAST:event_txtEntidadAlumnoActionPerformed
 
     private void txtMunicipioAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMunicipioAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMunicipioAlumnoActionPerformed
 
-    private void txtNumeroCasaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroCasaAlumnoActionPerformed
+    private void txtNumCasaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumCasaAlumnoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumeroCasaAlumnoActionPerformed
+    }//GEN-LAST:event_txtNumCasaAlumnoActionPerformed
 
     private void carrera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera1ActionPerformed
         // TODO add your handling code here:
@@ -2419,22 +2438,21 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField nombre1;
     private javax.swing.JTextField tel1;
     private javax.swing.JTextField txtAdicciones;
-    private javax.swing.JTextField txtAlumnoTrabaja;
-    private javax.swing.JTextField txtAmEspose;
-    private javax.swing.JTextField txtAmMET;
-    private javax.swing.JTextField txtAmPET;
-    private javax.swing.JTextField txtApEspose;
-    private javax.swing.JTextField txtApMET;
-    private javax.swing.JTextField txtApPET;
+    private javax.swing.JTextField txtAmaternoEspos;
+    private javax.swing.JTextField txtAmaternoF;
+    private javax.swing.JTextField txtAmaternoFamM;
+    private javax.swing.JTextField txtApaternoEspo;
+    private javax.swing.JTextField txtApaternoF;
+    private javax.swing.JTextField txtApaternoFamM;
     private javax.swing.JTextField txtAñoEgreso;
     private javax.swing.JTextField txtBeca;
     private javax.swing.JTextField txtCalleAlumno;
-    private javax.swing.JTextField txtCalleMET;
-    private javax.swing.JTextField txtCallePET;
+    private javax.swing.JTextField txtCalleFamF;
+    private javax.swing.JTextField txtCalleFamM;
+    private javax.swing.JTextField txtCantIntegrantes;
     private javax.swing.JTextField txtColoniaAlumno;
     private javax.swing.JTextField txtColoniaFamF;
     private javax.swing.JTextField txtColoniaFamM;
@@ -2442,16 +2460,18 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextField txtCosteaGastos;
     private javax.swing.JTextField txtCualBeca;
     private javax.swing.JTextField txtCuartoPropio;
-    private javax.swing.JTextField txtCuartosDormir;
     private javax.swing.JTextField txtDonde;
     private javax.swing.JTextField txtEdadFamF;
     private javax.swing.JTextField txtEdadFamM;
     private javax.swing.JTextArea txtEnfermedades;
+    private javax.swing.JTextField txtEntidadAlumno;
     private javax.swing.JTextField txtEscolaridadFamF;
     private javax.swing.JTextField txtEscolaridadFamM;
     private javax.swing.JTextField txtEspacioTareas;
-    private javax.swing.JTextField txtEstadoCV;
     private javax.swing.JTextField txtEstadoCasa;
+    private javax.swing.JTextField txtEstadoCivil;
+    private javax.swing.JTextField txtEstadoFamF;
+    private javax.swing.JTextField txtEstadoFamM;
     private javax.swing.JTextField txtGastosPersonales;
     private javax.swing.JTextField txtHijos;
     private javax.swing.JTextField txtHorario;
@@ -2459,23 +2479,21 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextArea txtInfoTraslado;
     private javax.swing.JTextField txtIngresoFamM;
     private javax.swing.JTextField txtIngresoSemFamF;
-    private javax.swing.JTextField txtLaCasaEs;
     private javax.swing.JTextField txtLocalidadAlumno;
     private javax.swing.JTextField txtLocalidadFamF;
     private javax.swing.JTextField txtLocalidadFamM;
     private javax.swing.JTextField txtLocalidadPrep;
     private javax.swing.JTextField txtMunicipioAlumno;
-    private javax.swing.JTextField txtMunicipioMET;
-    private javax.swing.JTextField txtMunicipioPET;
-    private javax.swing.JTextField txtNUmCasaMET;
-    private javax.swing.JTextField txtNombreEspose;
-    private javax.swing.JTextField txtNombresMET;
-    private javax.swing.JTextField txtNombresPET;
+    private javax.swing.JTextField txtMunicipioFamF;
+    private javax.swing.JTextField txtMunicipioFamM;
+    private javax.swing.JTextField txtNombreEspos;
+    private javax.swing.JTextField txtNombresF;
+    private javax.swing.JTextField txtNombresFamM;
     private javax.swing.JTextField txtNumCasaAlumno;
-    private javax.swing.JTextField txtNumCasaPET;
+    private javax.swing.JTextField txtNumCasaFamF;
+    private javax.swing.JTextField txtNumCasaFamM;
     private javax.swing.JTextField txtNumCuartosDormir;
     private javax.swing.JTextField txtNumHijos;
-    private javax.swing.JTextField txtNumeroCasaAlumno;
     private javax.swing.JTextField txtNumeroPlantas;
     private javax.swing.JTextArea txtObservacionesViv;
     private javax.swing.JTextField txtPatioCochera;
