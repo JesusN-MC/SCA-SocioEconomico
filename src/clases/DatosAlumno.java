@@ -22,9 +22,7 @@ public class DatosAlumno {
     String colonia;
     String calle; 
     String numeroCasa; 
-    String telefono;
-    String familiar;
-    String contactoFamiliar;
+
     
     public boolean crear(){
         try{
@@ -57,7 +55,7 @@ public class DatosAlumno {
                 id = datos.getInt("id_datosAlumno");
             }
         }catch(Exception e){
-            
+            System.out.println("no se encontro la id");
         }
         return id;
     }
