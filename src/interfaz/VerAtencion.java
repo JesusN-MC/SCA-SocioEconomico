@@ -22,19 +22,18 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Lizbeth
  */
-public class EditarAtencion extends javax.swing.JFrame {
+public class VerAtencion extends javax.swing.JFrame {
     JFrame regresar;
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarAtencion.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VerAtencion.class.getName());
     boolean existe;
     String idsoli;
     String idAtencionNueva = "0";
     /**
      * Creates new form MenuEstudiantes
      */
-    public EditarAtencion(JFrame pantalla ,String idSolicitud) {
+    public VerAtencion(JFrame pantalla ,String idSolicitud) {
         regresar = pantalla;
         idsoli = idSolicitud;
-        existe = consultarAtencion(idsoli);
         initComponents();
         DarEstilos();
         
@@ -47,58 +46,9 @@ public class EditarAtencion extends javax.swing.JFrame {
     }
     
     public void refrescar(String idS){
-        if(existe){
-            cargarDatos(idS);
-        }else{
-            iniciarAtencion(idS);
-            cargarDatos(idS);
-        }
+        cargarDatos(idS);
     }
     
-    public void iniciarAtencion(String idSolicitud){
-        
-        try{
-        Conexion conexion = new Conexion();
-        Connection con = conexion.con;
-        
-        String sql = "SELECT canaliza FROM solicitud WHERE idSolicitud = ?";
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, idSolicitud);
-        ResultSet datos = ps.executeQuery();
-        
-        String canalizado = "0";
-        if(datos.next()){
-            canalizado = datos.getString("canaliza");
-            if(canalizado.equals("")){
-                canalizado = "0";
-            }else{
-                canalizado = "1";
-            }
-        }
-        datos.close();
-        ps.close();
-        con.close();
-        
-        Atencion atencion = new Atencion(canalizado, idSolicitud);
-        if(atencion.crearAtencion()){
-            Conexion conexion2 = new Conexion();
-            Connection con2 = conexion2.con;
-
-            String sql2 = "SELECT idAtencion FROM atencion WHERE idAtencion = (SELECT MAX(idAtencion) FROM atencion)";
-            PreparedStatement ps2 = con2.prepareStatement(sql2);
-            ResultSet datos2 = ps2.executeQuery();
-            
-            if(datos2.next()){
-                idAtencionNueva = datos2.getString("idAtencion");       
-            }
-            datos2.close();
-            ps2.close();
-            con2.close();
-        }
-        }catch(Exception e){
-            showMessageDialog(null, "Error al cargar los datos" + e.getMessage());
-        }
-    }
     
     public void cargarDatos(String idSolicitud){
         try{
@@ -159,10 +109,11 @@ public class EditarAtencion extends javax.swing.JFrame {
                 comboEstatus.addItem("Rechazado");
                 notificado.setEnabled(true);
                 
-            }
+            } comboEstatus.setEditable(false);
             String estatusNotificado = datos.getString("estatusNotificado");
             if(estatusNotificado.equals("1")){
                notificado.setSelected(true);
+               notificado.setEnabled(false);
             }
             
             String nombre = datos.getString("nombreAlumno");
@@ -223,32 +174,6 @@ public class EditarAtencion extends javax.swing.JFrame {
         campoCarrera.setEditable(false);
     }
     
-    public boolean consultarAtencion(String idSoli){
-        boolean existe = false;
-        try{
-        Conexion conexion = new Conexion();
-        Connection con = conexion.con;
-        
-        String sql = "SELECT * FROM atencion WHERE idSolicitud = ?";
-        
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setString(1, idSoli);
-        ResultSet datos = ps.executeQuery();
-        
-        if(datos.next()){
-            existe = true;
-            
-        }
-        
-        datos.close();
-        ps.close();
-        con.close();
-        
-        }catch(Exception e){
-            showMessageDialog(null, "Error al cargar los datos" + e.getMessage());
-        }
-        return existe;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -291,9 +216,8 @@ public class EditarAtencion extends javax.swing.JFrame {
         notificado = new javax.swing.JCheckBox();
         jLabel13 = new javax.swing.JLabel();
         Formulario = new javax.swing.JPanel();
-        botonCancelar = new javax.swing.JButton();
         botonFormulario = new javax.swing.JButton();
-        botonGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         campoResumen = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
@@ -548,15 +472,6 @@ public class EditarAtencion extends javax.swing.JFrame {
         Formulario.setBackground(new java.awt.Color(43, 138, 127));
         Formulario.setPreferredSize(new java.awt.Dimension(720, 40));
 
-        botonCancelar.setBackground(new java.awt.Color(255, 102, 102));
-        botonCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonCancelar.setText("Cancelar");
-        botonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonCancelarActionPerformed(evt);
-            }
-        });
-
         botonFormulario.setBackground(new java.awt.Color(102, 153, 255));
         botonFormulario.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         botonFormulario.setText("Formuiario");
@@ -566,12 +481,12 @@ public class EditarAtencion extends javax.swing.JFrame {
             }
         });
 
-        botonGuardar.setBackground(new java.awt.Color(153, 255, 153));
-        botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonGuardar.setText("Guardar");
-        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(83, 178, 167));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regresar.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuardarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -580,30 +495,20 @@ public class EditarAtencion extends javax.swing.JFrame {
         FormularioLayout.setHorizontalGroup(
             FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FormularioLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(botonCancelar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 529, Short.MAX_VALUE)
                 .addComponent(botonFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
-            .addGroup(FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(FormularioLayout.createSequentialGroup()
-                    .addGap(124, 124, 124)
-                    .addComponent(botonGuardar)
-                    .addContainerGap(520, Short.MAX_VALUE)))
         );
         FormularioLayout.setVerticalGroup(
             FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FormularioLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(FormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(FormularioLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jPanel1.add(Formulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, -1, 40));
@@ -664,15 +569,9 @@ public class EditarAtencion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_campoCarreraActionPerformed
 
-    private void botonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCancelarActionPerformed
-        // TODO add your handling code here:
-        regresar.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_botonCancelarActionPerformed
-
     private void botonFormularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFormularioActionPerformed
         // TODO add your handling code here:
-        FormularioBaseEditar form = new FormularioBaseEditar(this , idAtencionNueva);
+        FormularioBaseEditar form = new FormularioBaseEditar(this, idAtencionNueva);
         form.setVisible(true);
         form.setLocationRelativeTo(null);
         this.setVisible(false);
@@ -682,51 +581,11 @@ public class EditarAtencion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboEstatusActionPerformed
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
-        String estatus = (String) comboEstatus.getSelectedItem();
-        if(estatus.equals("Formulario Pendiente")){
-                estatus = ("1");
-        }else if(estatus.equals("Esperando Respuesta")){
-            estatus = ("2");
-        }else if(estatus.equals("Aprobado")){
-            estatus = ("3");
-        }else if(estatus.equals("Rechazado")){
-            estatus = ("4");
-        }
-        
-        String noti;
-        
-        if(notificado.isSelected()){
-            noti = "1";
-        }else{
-            noti = "0";
-        }
-        String id = idsoli;
-       
-     
-        String resumen = campoResumen.getText();
-        
-        Atencion at = new Atencion(estatus, noti, id, resumen);
-        if(at.actualizar()){
-            showMessageDialog(null, "Guardado" );
-            
-            if(noti.equals("1") && (estatus.equals("3") || estatus.equals("4") )){
-                int idSoli = Integer.parseInt(id);
-                Solicitud s = new Solicitud(idSoli);
-                if(s.Actualizar()){
-                    showMessageDialog(null, "Atencion Completada de Manera Exitosa");
-                    regresar.setVisible(true);
-                    dispose();
-                }
-            }else{
-                this.refrescar(id);
-            }
-            
-        }else{
-            showMessageDialog(null, "estatus: " + estatus + " notificado: "+ noti+ " id: "+ id + " resumen: " + resumen );
-        } 
-    }//GEN-LAST:event_botonGuardarActionPerformed
+        regresar.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
  
     /**
      * @param args the command line arguments
@@ -763,9 +622,8 @@ public class EditarAtencion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CampoFecha;
     private javax.swing.JPanel Formulario;
-    private javax.swing.JButton botonCancelar;
     private javax.swing.JButton botonFormulario;
-    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnlogo;
     private javax.swing.JTextField campoCanalizacion;
     private javax.swing.JTextField campoCarrera;
