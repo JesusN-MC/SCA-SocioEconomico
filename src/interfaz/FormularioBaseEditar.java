@@ -3,8 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
+import clases.CondicionesVivienda;
 import clases.Conexion;
+import clases.DatosAlumno;
+import clases.DatosFamiliaresF;
+import clases.DatosFamiliaresM;
 import clases.Formulario;
+import clases.Gastos;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,8 +106,41 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
                     ps2.setInt(2, ID);
                     ps2.executeUpdate();
                     
-                    //actualizar el formulario para que tenga las id de sus apartados
+                    //crear las tablas de los apartados y asignarlas al formulario.
+                    DatosAlumno da = new DatosAlumno();
+                    if(da.crear()){
+                        Formulario form = new Formulario(idFormulario, da.consultarReciente(), "1");
+                        form.updateDatosAlumno();
+                        System.out.println("Apartado 1 Generado Exitosamente");
+                    }
                     
+                    CondicionesVivienda cv = new CondicionesVivienda();
+                    if(cv.crear()){
+                        Formulario form2 = new Formulario("2",idFormulario, cv.consultarReciente());
+                        form2.updateCondicionesVivienda();
+                        System.out.println("Apartado 2 Generado Exitosamente");
+                    }
+                    
+                    Gastos g = new Gastos();
+                    if(g.crear()){
+                        Formulario form3 = new Formulario(idFormulario, "3", g.consultarReciente());
+                        form3.updateGastos();
+                        System.out.println("Apartado 3 Generado Exitosamente");
+                    }
+                    
+                    DatosFamiliaresF dff = new DatosFamiliaresF();
+                    if(dff.crear()){
+                        Formulario form4 = new Formulario(idFormulario, dff.consultarReciente(), 4);
+                        form4.updateDatosFamiliaresF();
+                        System.out.println("Apartado 4 Generado Exitosamente");
+                    }
+                    
+                    DatosFamiliaresM dfm = new DatosFamiliaresM();
+                    if(dfm.crear()){
+                        Formulario form5 = new Formulario(idFormulario, dfm.consultarReciente());
+                        form5.updateDatosFamiliaresM();
+                        System.out.println("Apartado 5 Generado Exitosamente");
+                    }
                     
                     
                 }catch(Exception e){
@@ -119,7 +157,273 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     
     public void cargarDatos(String id){
         
-        // datos del alumno 
+        //Consultar todo de Formulario
+        try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT f.*, a.nombreAlumno , a.grupo , c.nombreCarrera , s.telefonoSolicitud , s.familiar , s.telefonoFamiliar\n" +
+                        "FROM formulario f\n" +
+                        "INNER JOIN atencion at ON f.idFormulario = at.idFormulario\n" +
+                        "INNER JOIN solicitud s ON at.idSolicitud = s.idSolicitud\n" +
+                        "INNER JOIN alumno a ON s.idAlumno = a.idAlumno\n" +
+                        "INNER JOIN carrera c ON a.idCarrera = c.idCarrera\n" +
+                        "WHERE f.idFormulario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idFormulario);
+            
+            ResultSet datos = ps.executeQuery();
+            if(datos.next()){
+                fecha.setText(datos.getString("fecha"));
+                fecha.setEditable(false);
+                nombre1.setText(datos.getString("nombreAlumno"));
+                nombre1.setEditable(false);
+                carrera1.setText(datos.getString("nombreCarrera"));
+                carrera1.setEditable(false);
+                grupo1.setText(datos.getString("grupo"));
+                grupo1.setEditable(false);
+                tel1.setText(datos.getString("telefonoSolicitud"));
+                tel1.setEditable(false);
+                familiar1.setText(datos.getString("familiar"));
+                familiar1.setEditable(false);
+                contactoF1.setText("telefonoFamiliar");
+                contactoF1.setEditable(false);
+                
+                apartado1(datos.getInt("id_datosAlumno"));
+                apartado2(datos.getInt("id_condicionesVivienda"));
+                apartado3(datos.getInt("id_gastos"));
+                apartado4(datos.getInt("id_datosFamiliaresF"));
+                apartado5(datos.getInt("id_datosFamiliaresM"));
+                
+                
+                
+            }
+            
+        }catch (Exception e){
+            
+        }
+    }
+    
+    public void apartado1(int id){
+        try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT * FROM datosAlumno WHERE id_datosAlumno = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet datos = ps.executeQuery();
+            
+            if(datos.next()){
+                txtReligion.setText(datos.getString("religion"));
+                txtEntidadAlumno.setText(datos.getString("estado"));
+                txtMunicipioAlumno.setText(datos.getString("municipio"));
+                txtLocalidadAlumno.setText(datos.getString("localidad"));
+                txtColoniaAlumno.setText(datos.getString("colonia"));
+                txtCalleAlumno.setText(datos.getString("calle"));
+                txtNumCasaAlumno.setText(datos.getString("numeroCasa"));
+            }
+                    
+        }catch(Exception e){
+            System.out.println("error en el apartado 1");
+        }
+    }
+    
+    public void apartado2(int id){
+        //;
+        try{
+            Conexion conexion2 = new Conexion();
+            Connection con2 = conexion2.con;
+            
+            String sql2 = "SELECT * FROM condicionesVivienda WHERE id_condicionesVivienda = ?";
+            PreparedStatement ps2 = con2.prepareStatement(sql2);
+            ps2.setInt(1, id);
+            
+            ResultSet datos = ps2.executeQuery();
+            
+            if(datos.next()){
+                //carga datos
+                String material = datos.getString("material");
+                if("1".equals(material)){
+                    cbxMaterial.setSelected(true);
+                }
+                
+                String tejas  = datos.getString("tejas");
+                if("1".equals(tejas)){
+                    cbxTejas.setSelected(true);
+                }
+                
+                String palma = datos.getString("palma");
+                if("1".equals(palma)){
+                    cbxPalma.setSelected(true);
+                }
+                
+                String carton = datos.getString("carton");
+                if("1".equals(carton)){
+                    cbxCarton.setSelected(true);
+                }
+                
+                String otro = datos.getString("otro");
+                if("1".equals(otro)){
+                    cbxOtro.setSelected(true);
+                }
+                
+                int plantas = datos.getInt("numeroPlantas");
+                if(plantas != 0){
+                    txtNumPlantas.setText(plantas + "");
+                }
+                
+                String ec = datos.getString("laCasaEs");
+                if(ec != null){
+                    txtEstadoCasa.setText(ec);
+                }
+                
+                String piezas = datos.getString("piezas");
+                if(piezas != null){
+                    txtNumPiezasCasa.setText(piezas);
+                }
+                
+                String cuartod = datos.getString("cuartosDormir");
+                if(cuartod != null){
+                    txtNumCuartosDormir.setText(cuartod);
+                }
+                
+                String cuartop = datos.getString("cuartoPropio");
+                if(cuartop != null){
+                    txtCuartoPropio.setText(cuartop);
+                }
+                
+                String compartido = datos.getString("compartidoCon");
+                if(compartido != null){
+                    txtCompartidoCon.setText(compartido);
+                }
+                
+                String pc = datos.getString("patioCochera");
+                if(pc != null){
+                    txtPatioCochera.setText(pc);
+                }
+                
+                int ni = datos.getInt("cantidadIntegrantes");
+                if(ni != 0){
+                    txtNumIntegrantes.setText(ni + "");
+                }
+                
+                String tr = datos.getString("informacionTraslado");
+                if(tr != null){
+                    txtTraslado.setText(tr);
+                }
+                
+                String et = datos.getString("espacioTareas");
+                if(et != null){
+                    txtEspacioTareas.setText(et);
+                }
+                
+                String enf = datos.getString("enfermedades");
+                if(enf != null){
+                    txtEnfermedad.setText(enf);
+                }
+                
+                String agua = datos.getString("agua");
+                if("1".equals(agua)){
+                    cbxAguaDrenaje.setSelected(true);
+                }
+                
+                String luz = datos.getString("luz");
+                if("1".equals(luz)){
+                    cbxLuz.setSelected(true);
+                }
+                
+                String cable = datos.getString("cable");
+                if("1".equals(cable)){
+                    cbxTelefono.setSelected(true);
+                }
+                
+                String estufa = datos.getString("estufa");
+                if("1".equals(estufa)){
+                    cbxEstufa.setSelected(true);
+                }
+                
+                String refrigerador = datos.getString("refrigerador");
+                if("1".equals(refrigerador)){
+                    cbxRefrigerador.setSelected(true);
+                }
+                
+                String television = datos.getString("television");
+                if("1".equals(television)){
+                    cbxTelevicion.setSelected(true);
+                }
+                
+                String lavadora = datos.getString("lavadora");
+                if("1".equals(lavadora)){
+                    cbxLavadora.setSelected(true);
+                }
+                
+                String computadora = datos.getString("computadora");
+                if("1".equals(computadora)){
+                    cbxComputadora.setSelected(true);
+                }
+                
+                String microondas = datos.getString("microondas");
+                if("1".equals(microondas)){
+                    cbxMicroondas.setSelected(true);
+                }
+                
+                String comedor = datos.getString("comedor");
+                if("1".equals(comedor)){
+                    cbxComeador.setSelected(true);
+                }
+                
+                String sala = datos.getString("sala");
+                if("1".equals(sala)){
+                    cbxSala.setSelected(true);
+                }
+                
+                String celular = datos.getString("celular");
+                if("1".equals(celular)){
+                    cbxCelular.setSelected(true);
+                }
+                
+                String minisplit = datos.getString("minisplit");
+                if("1".equals(minisplit)){
+                    cbxMinisplit.setSelected(true);
+                }
+                
+                String abanico = datos.getString("abanico");
+                if("1".equals(abanico)){
+                    cbxAbanico.setSelected(true);
+                }
+                
+                String piso = datos.getString("piso");
+                if("1".equals(piso)){
+                    cbxPiso.setSelected(true);
+                }
+                
+                String ob = datos.getString("observaciones");
+                if(ob != null){
+                    txtObservacionesViv.setText(ob);
+                }
+                
+                String inf = datos.getString("informacionExtra");
+                if(inf != null){
+                    txtInfoExtra.setText(inf);
+                }
+            }
+                    
+        }catch(Exception e){
+            System.out.println("error en el apartado 2" + e.getMessage());
+        }
+    }
+    
+    public void apartado3(int id){
+        
+    }
+    
+    public void apartado4(int id){
+        
+    }
+    
+    public void apartado5(int id){
         
     }
 
@@ -149,21 +453,17 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
+        fecha = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtReligion = new javax.swing.JTextField();
-        txtAmAlumno = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        txtApAlumno = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtNombreAlumno = new javax.swing.JTextField();
+        nombre1 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         txtLocalidadAlumno = new javax.swing.JTextField();
-        txtGrupo = new javax.swing.JTextField();
+        grupo1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtCarrera = new javax.swing.JTextField();
+        carrera1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         txtNumeroCasaAlumno = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -171,11 +471,13 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         txtEstadoAlumno = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        txtFamiliarAlumno = new javax.swing.JTextField();
+
+        familiar1 = new javax.swing.JTextField();
+
         txtCalleAlumno = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtColoniaAlumno = new javax.swing.JTextField();
-        txtContactoFamiliar = new javax.swing.JTextField();
+        contactoF1 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
@@ -187,7 +489,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         cbxTejas = new javax.swing.JCheckBox();
         cbxCarton = new javax.swing.JCheckBox();
         jLabel24 = new javax.swing.JLabel();
-        txtTelefonoAlumno = new javax.swing.JTextField();
+
+        tel1 = new javax.swing.JTextField();
+
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -475,17 +779,18 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel5.setText("Fecha:");
         CuerpoFormulario.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 70, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel6.setText("Apellido Materno:");
-        CuerpoFormulario.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 210, 130, -1));
+        fecha.setBackground(new java.awt.Color(195, 210, 197));
+        fecha.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        fecha.addActionListener(new java.awt.event.ActionListener() {
 
-        txtFecha.setBackground(new java.awt.Color(195, 210, 197));
-        txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFechaActionPerformed(evt);
+                fechaActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 130, 30));
+
+        jPanel1.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 160, 130, 30));
+
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Religion:");
@@ -499,37 +804,20 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         });
         CuerpoFormulario.add(txtReligion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 320, 170, 30));
 
-        txtAmAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtAmAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtAmAlumnoActionPerformed(evt);
-            }
-        });
-        CuerpoFormulario.add(txtAmAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 210, 30));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel8.setText("Apellido Paterno:");
-        CuerpoFormulario.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 210, 130, -1));
-
-        txtApAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtApAlumno.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtApAlumnoActionPerformed(evt);
-            }
-        });
-        CuerpoFormulario.add(txtApAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, 210, 30));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setText("Nombre:");
         CuerpoFormulario.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 70, -1));
 
-        txtNombreAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtNombreAlumno.addActionListener(new java.awt.event.ActionListener() {
+        nombre1.setBackground(new java.awt.Color(195, 210, 197));
+        nombre1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreAlumnoActionPerformed(evt);
+                nombre1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtNombreAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 230, 30));
+
+        jPanel1.add(nombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 380, 30));
+
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel10.setText("Localidad:");
@@ -543,13 +831,15 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         });
         CuerpoFormulario.add(txtLocalidadAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, 220, 30));
 
-        txtGrupo.setBackground(new java.awt.Color(195, 210, 197));
-        txtGrupo.addActionListener(new java.awt.event.ActionListener() {
+        grupo1.setBackground(new java.awt.Color(195, 210, 197));
+        grupo1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGrupoActionPerformed(evt);
+                grupo1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtGrupo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 80, 30));
+
+        jPanel1.add(grupo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, 80, 30));
+
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel11.setText("Grupo:");
@@ -559,13 +849,15 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel12.setText("Carrera:");
         CuerpoFormulario.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 70, -1));
 
-        txtCarrera.setBackground(new java.awt.Color(195, 210, 197));
-        txtCarrera.addActionListener(new java.awt.event.ActionListener() {
+        carrera1.setBackground(new java.awt.Color(195, 210, 197));
+        carrera1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCarreraActionPerformed(evt);
+                carrera1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtCarrera, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
+
+        jPanel1.add(carrera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 270, 30));
+
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel13.setText("Número de casa:");
@@ -607,13 +899,14 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel16.setText("Contacto Familiar:");
         CuerpoFormulario.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 530, 130, -1));
 
-        txtFamiliarAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtFamiliarAlumno.addActionListener(new java.awt.event.ActionListener() {
+        familiar1.setBackground(new java.awt.Color(195, 210, 197));
+        familiar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFamiliarAlumnoActionPerformed(evt);
+                familiar1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtFamiliarAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 560, 230, 30));
+        jPanel1.add(familiar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 560, 230, 30));
+
 
         txtCalleAlumno.setBackground(new java.awt.Color(195, 210, 197));
         txtCalleAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -635,13 +928,15 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         });
         CuerpoFormulario.add(txtColoniaAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 230, 30));
 
-        txtContactoFamiliar.setBackground(new java.awt.Color(195, 210, 197));
-        txtContactoFamiliar.addActionListener(new java.awt.event.ActionListener() {
+        contactoF1.setBackground(new java.awt.Color(195, 210, 197));
+        contactoF1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtContactoFamiliarActionPerformed(evt);
+                contactoF1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtContactoFamiliar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, 180, 30));
+
+        jPanel1.add(contactoF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 560, 180, 30));
+
 
         jLabel19.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel19.setText("¿De que material está hecho la casa?");
@@ -712,13 +1007,14 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jLabel24.setText("Teléfono:");
         CuerpoFormulario.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, 70, -1));
 
-        txtTelefonoAlumno.setBackground(new java.awt.Color(195, 210, 197));
-        txtTelefonoAlumno.addActionListener(new java.awt.event.ActionListener() {
+        tel1.setBackground(new java.awt.Color(195, 210, 197));
+        tel1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTelefonoAlumnoActionPerformed(evt);
+                tel1ActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtTelefonoAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 230, 30));
+        jPanel1.add(tel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 230, 30));
+
 
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel25.setText("Observaciones de la vivienda:");
@@ -1874,9 +2170,11 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroPlantasActionPerformed
 
-    private void txtTelefonoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoAlumnoActionPerformed
+
+    private void tel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tel1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTelefonoAlumnoActionPerformed
+    }//GEN-LAST:event_tel1ActionPerformed
+
 
     private void cbxCartonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCartonActionPerformed
         // TODO add your handling code here:
@@ -1898,9 +2196,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCelularActionPerformed
 
-    private void txtContactoFamiliarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContactoFamiliarActionPerformed
+    private void contactoF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactoF1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtContactoFamiliarActionPerformed
+    }//GEN-LAST:event_contactoF1ActionPerformed
 
     private void txtColoniaAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaAlumnoActionPerformed
         // TODO add your handling code here:
@@ -1910,9 +2208,11 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCalleAlumnoActionPerformed
 
-    private void txtFamiliarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFamiliarAlumnoActionPerformed
+
+    private void familiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_familiar1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFamiliarAlumnoActionPerformed
+    }//GEN-LAST:event_familiar1ActionPerformed
+
 
     private void txtEstadoAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoAlumnoActionPerformed
         // TODO add your handling code here:
@@ -1926,37 +2226,29 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNumeroCasaAlumnoActionPerformed
 
-    private void txtCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCarreraActionPerformed
+    private void carrera1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrera1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCarreraActionPerformed
+    }//GEN-LAST:event_carrera1ActionPerformed
 
-    private void txtGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGrupoActionPerformed
+    private void grupo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grupo1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtGrupoActionPerformed
+    }//GEN-LAST:event_grupo1ActionPerformed
 
     private void txtLocalidadAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLocalidadAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLocalidadAlumnoActionPerformed
 
-    private void txtNombreAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreAlumnoActionPerformed
+    private void nombre1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombre1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreAlumnoActionPerformed
-
-    private void txtApAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApAlumnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtApAlumnoActionPerformed
-
-    private void txtAmAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmAlumnoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtAmAlumnoActionPerformed
+    }//GEN-LAST:event_nombre1ActionPerformed
 
     private void txtReligionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtReligionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtReligionActionPerformed
 
-    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFechaActionPerformed
+    }//GEN-LAST:event_fechaActionPerformed
 
     private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
         // TODO add your handling code here:
@@ -1998,6 +2290,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JButton BotonCancelar;
     private javax.swing.JPanel CuerpoFormulario;
     private javax.swing.JButton botonGuardar;
+    private javax.swing.JTextField carrera1;
     private javax.swing.JCheckBox cbxAbanico;
     private javax.swing.JCheckBox cbxAguaDrenaje;
     private javax.swing.JCheckBox cbxCarton;
@@ -2018,6 +2311,10 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbxTejas;
     private javax.swing.JCheckBox cbxTelefono;
     private javax.swing.JCheckBox cbxTelevicion;
+    private javax.swing.JTextField contactoF1;
+    private javax.swing.JTextField familiar1;
+    private javax.swing.JTextField fecha;
+    private javax.swing.JTextField grupo1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -2074,7 +2371,6 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -2096,7 +2392,6 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
     private javax.swing.JLabel jLabel82;
@@ -2124,27 +2419,26 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextField nombre1;
+    private javax.swing.JTextField tel1;
     private javax.swing.JTextField txtAdicciones;
-    private javax.swing.JTextField txtAmAlumno;
-    private javax.swing.JTextField txtAmaternoEspos;
-    private javax.swing.JTextField txtAmaternoF;
-    private javax.swing.JTextField txtAmaternoFamM;
-    private javax.swing.JTextField txtApAlumno;
-    private javax.swing.JTextField txtApaternoEspo;
-    private javax.swing.JTextField txtApaternoF;
-    private javax.swing.JTextField txtApaternoFamM;
+    private javax.swing.JTextField txtAlumnoTrabaja;
+    private javax.swing.JTextField txtAmEspose;
+    private javax.swing.JTextField txtAmMET;
+    private javax.swing.JTextField txtAmPET;
+    private javax.swing.JTextField txtApEspose;
+    private javax.swing.JTextField txtApMET;
+    private javax.swing.JTextField txtApPET;
     private javax.swing.JTextField txtAñoEgreso;
     private javax.swing.JTextField txtBeca;
     private javax.swing.JTextField txtCalleAlumno;
-    private javax.swing.JTextField txtCalleFamF;
-    private javax.swing.JTextField txtCalleFamM;
-    private javax.swing.JTextField txtCantIntegrantes;
-    private javax.swing.JTextField txtCarrera;
+    private javax.swing.JTextField txtCalleMET;
+    private javax.swing.JTextField txtCallePET;
     private javax.swing.JTextField txtColoniaAlumno;
     private javax.swing.JTextField txtColoniaFamF;
     private javax.swing.JTextField txtColoniaFamM;
     private javax.swing.JTextField txtCompartidoCon;
-    private javax.swing.JTextField txtContactoFamiliar;
     private javax.swing.JTextField txtCosteaGastos;
     private javax.swing.JTextField txtCualBeca;
     private javax.swing.JTextField txtCuartoPropio;
@@ -2156,14 +2450,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextField txtEscolaridadFamF;
     private javax.swing.JTextField txtEscolaridadFamM;
     private javax.swing.JTextField txtEspacioTareas;
-    private javax.swing.JTextField txtEstadoAlumno;
-    private javax.swing.JTextField txtEstadoCivil;
-    private javax.swing.JTextField txtEstadoFamF;
-    private javax.swing.JTextField txtEstadoFamM;
-    private javax.swing.JTextField txtFamiliarAlumno;
-    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtEstadoCV;
+    private javax.swing.JTextField txtEstadoCasa;
     private javax.swing.JTextField txtGastosPersonales;
-    private javax.swing.JTextField txtGrupo;
     private javax.swing.JTextField txtHijos;
     private javax.swing.JTextField txtHorario;
     private javax.swing.JTextArea txtInfoExtra;
@@ -2176,14 +2465,15 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextField txtLocalidadFamM;
     private javax.swing.JTextField txtLocalidadPrep;
     private javax.swing.JTextField txtMunicipioAlumno;
-    private javax.swing.JTextField txtMunicipioFamF;
-    private javax.swing.JTextField txtMunicipioFamM;
-    private javax.swing.JTextField txtNombreAlumno;
-    private javax.swing.JTextField txtNombreEspos;
-    private javax.swing.JTextField txtNombresF;
-    private javax.swing.JTextField txtNombresFamM;
-    private javax.swing.JTextField txtNumCasaFamF;
-    private javax.swing.JTextField txtNumCasaFamM;
+    private javax.swing.JTextField txtMunicipioMET;
+    private javax.swing.JTextField txtMunicipioPET;
+    private javax.swing.JTextField txtNUmCasaMET;
+    private javax.swing.JTextField txtNombreEspose;
+    private javax.swing.JTextField txtNombresMET;
+    private javax.swing.JTextField txtNombresPET;
+    private javax.swing.JTextField txtNumCasaAlumno;
+    private javax.swing.JTextField txtNumCasaPET;
+    private javax.swing.JTextField txtNumCuartosDormir;
     private javax.swing.JTextField txtNumHijos;
     private javax.swing.JTextField txtNumeroCasaAlumno;
     private javax.swing.JTextField txtNumeroPlantas;
@@ -2192,7 +2482,6 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextField txtPiezas;
     private javax.swing.JTextField txtPreparatoria;
     private javax.swing.JTextField txtReligion;
-    private javax.swing.JTextField txtTelefonoAlumno;
     private javax.swing.JTextField txtTiempoCasados;
     private javax.swing.JTextField txtTiempoLibre;
     private javax.swing.JTextField txtTrabajaEspos;
