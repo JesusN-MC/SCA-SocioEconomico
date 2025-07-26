@@ -3,7 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
+import clases.Conexion;
+import clases.Formulario;
 import com.formdev.flatlaf.FlatLightLaf;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JFrame;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -13,20 +20,107 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author jobno
  */
 public class FormularioBaseEditar extends javax.swing.JFrame {
+    JFrame regresa;
+    int idFormulario;
+    
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormularioBaseEditar.class.getName());
 
     /**
      * Creates new form MenuEstudiantes
      */
-    public FormularioBaseEditar() {
+    public FormularioBaseEditar(JFrame pantalla, String idAtencion) {
+        regresa = pantalla;
         initComponents();
-        DarEstilos();
+        boolean existe = consultarFormulario(idAtencion);
+        refrescar(idAtencion, existe);
     }
     
-    public void DarEstilos(){
+    public void refrescar(String id, boolean existe){
+        if(existe){
+            cargarDatos(id);
+        }else{
+            crearFormulario(id);
+            cargarDatos(id);
+        }
+    }
+    
+    public boolean consultarFormulario(String idA){
+        boolean existe = false;
+        try{
+        Conexion conexion = new Conexion();
+        Connection con = conexion.con;
         
+        String sql = "SELECT idFormulario FROM atencion WHERE idAtencion = ?";
+        
+        PreparedStatement ps = con.prepareStatement(sql);
+        ps.setString(1, idA);
+        ResultSet datos = ps.executeQuery();
+        
+        if(datos.next()){
+            if((datos.getInt("idFormulario")) != 0){
+                idFormulario = datos.getInt("idFormulario");
+                existe = true;
+            }else{
+                System.out.println("llego aca osea es 0");
+            }
+            
+        }
+        
+        datos.close();
+        ps.close();
+        con.close();
+        
+        }catch(Exception e){
+            showMessageDialog(null, "Error al cargar los datos" + e.getMessage());
+        }
+        return existe;
+    }
+    
+    public void crearFormulario(String id){
+        Formulario formulario =  new Formulario();
+        if(formulario.crearFormulario()){
+            try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT idFormulario FROM formulario WHERE idFormulario = (SELECT MAX(idFormulario) FROM formulario)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet datos = ps.executeQuery();
+            if(datos.next()){
+                idFormulario = datos.getInt("idFormulario");
+                try{
+                    //actualizar la atencion para que tenga el formulario
+                    Conexion conexion2 = new Conexion();
+                    Connection con2 = conexion2.con;
 
+                    String sql2 = "UPDATE atencion SET idFormulario = ? WHERE idAtencion = ?";
+                    PreparedStatement ps2 = con2.prepareStatement(sql2);
+                    ps2.setInt(1, idFormulario);
+                    int ID = Integer.parseInt(id);
+                    ps2.setInt(2, ID);
+                    ps2.executeUpdate();
+                    
+                    //actualizar el formulario para que tenga las id de sus apartados
+                    
+                    
+                    
+                }catch(Exception e){
+                    showMessageDialog(null, "Error al asignar el Formulario");
+
+                }
+            }
+            
+        }catch(Exception e){
+            showMessageDialog(null, "Error al consultar el id del formulario");
+        }
+        }
+    }
+    
+    public void cargarDatos(String id){
+        
+        // datos del alumno 
+        
     }
 
     /**
@@ -1897,7 +1991,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        java.awt.EventQueue.invokeLater(() -> new FormularioBaseEditar().setVisible(true));
+        //java.awt.EventQueue.invokeLater(() -> new FormularioBaseEditar().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

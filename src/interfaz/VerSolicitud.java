@@ -530,6 +530,11 @@ public class VerSolicitud extends javax.swing.JFrame {
             String estatusNotificado = datos.getString("estatusNotificado");
             if((estatus.equals("3") || estatus.equals("4")) && estatusNotificado.equals("1")){
                 //aqui queda pendiente para hacer una instancia a una pantalla de atencion completada
+                String id = Integer.toString(idSolicitud);
+                VerAtencion va = new VerAtencion(actual, id);
+                va.setVisible(true);
+                va.setLocationRelativeTo(null);        
+                this.setVisible(false);
                 
             }else{
                 String id = Integer.toString(idSolicitud);
