@@ -459,6 +459,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     
     public void apartadoDatosFamiliarF(int id){
         
+
         try{
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
@@ -487,13 +488,17 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         }
     }
     //familiarM
+
+            
+
+
+    //familiarM
     public void apartadoDatosFamiliarM(int id){
-
         try{
-
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
-            
+            //conexion 
+
             String sql = "SELECT * FROM datosFamiliaresM WHERE id_datosFamiliaresM = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -518,6 +523,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         }catch(Exception e){
             System.out.println("Error al guardar los datos del padre");
         }
+
 
     }
     
