@@ -488,7 +488,9 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     }
     //familiarM
     public void apartadoDatosFamiliarM(int id){
-       try{
+
+        try{
+
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
             
@@ -497,6 +499,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
             ps.setInt(1, id);
             
             ResultSet datos = ps.executeQuery();
+
             if (datos.next()) {
             txtNombresFamM.setText(datos.getString("nombres"));
             txtApaternoFamM.setText(datos.getString("ap"));
@@ -510,11 +513,12 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
             txtColoniaFamM.setText(datos.getString("colonia"));
             txtCalleFamM.setText(datos.getString("calle"));
             txtNumCasaFamM.setText(datos.getString("numeroCasa")); 
+
             }
         }catch(Exception e){
             System.out.println("Error al guardar los datos del padre");
         }
-        
+
     }
     
 
