@@ -47,6 +47,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         }else{
             crearFormulario(id);
             cargarDatos(id);
+            
         }
     }
     

@@ -29,7 +29,7 @@ public class DatosAlumno {
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
             
-            String sql = "INSERT INTO datosAlumno VALUES (NULL, '', '', '', '', '', '', '', '', '', '')";
+            String sql = "INSERT INTO datosAlumno VALUES (NULL, '', '', '', '', '', '', '')";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.executeUpdate();
