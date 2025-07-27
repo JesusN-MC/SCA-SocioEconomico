@@ -405,6 +405,7 @@ public class CrearEstudiante extends javax.swing.JFrame {
             
             VisualizarEstudiante ve = new VisualizarEstudiante(idAlumnoGenerado);
             ve.setVisible(true);
+            ve.setLocationRelativeTo(null);
             this.dispose();
             
 
