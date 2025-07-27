@@ -20,6 +20,7 @@ public class Formulario {
     int id_gastos;
     int id_datosFamiliaresF;
     int id_datosFamiliaresM;
+    int idDatosHermanos;
 
     public Formulario(int idFormulario, int id_datosAlumno, String n) {
         this.idFormulario = idFormulario;
@@ -45,11 +46,15 @@ public class Formulario {
         this.idFormulario = idFormulario;
         this.id_datosFamiliaresM = id_datosFamiliaresM;
     }
-    
-    
+
+    public Formulario(int idFormulario, int idDatosHermanos, boolean a) {
+        this.idFormulario = idFormulario;
+        this.idDatosHermanos = idDatosHermanos;
+    }
 
     public Formulario() {
     }
+    
 
     
     public boolean crearFormulario(){
@@ -57,7 +62,9 @@ public class Formulario {
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
             
-            String sql = "INSERT INTO formulario VALUES (NULL, NOW(), NULL, NULL, NULL, NULL, NULL)";
+            String sql = "INSERT INTO formulario VALUES (NULL, NOW(), NULL, NULL, NULL, NULL, NULL, NULL)";
+            //String sql = "INSERT INTO formulario (fecha, id_datosAlumno, id_condicionesVivienda, id_gastos, id_datosFamiliaresF, id_datosFamiliaresM, IdDatosHermanos) " +
+             //"VALUES (NOW(), NULL, NULL, NULL, NULL, NULL, NULL)";
             PreparedStatement ps = con.prepareStatement(sql);
             
             ps.executeUpdate();
@@ -156,5 +163,23 @@ public class Formulario {
             showMessageDialog(null, "Error al actualizar id_datosFamiliaresM");
         }
     }
+    public void updateDatosHermanos() {
+        try {
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+
+            String sql = "UPDATE formulario SET idDatosHermanos = ? WHERE idFormulario = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idDatosHermanos);
+            ps.setInt(2, idFormulario);
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            showMessageDialog(null, "Error al actualizar idDatosHermanos");
+        }
+    }
+    
+    
 
 }

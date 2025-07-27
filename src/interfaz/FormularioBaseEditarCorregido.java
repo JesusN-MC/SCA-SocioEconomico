@@ -8,6 +8,7 @@ import clases.Conexion;
 import clases.DatosAlumno;
 import clases.DatosFamiliaresF;
 import clases.DatosFamiliaresM;
+import clases.DatosHermanos;
 import clases.Formulario;
 import clases.Gastos;
 import com.formdev.flatlaf.FlatLightLaf;
@@ -140,6 +141,13 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
                         Formulario form5 = new Formulario(idFormulario, dfm.consultarReciente());
                         form5.updateDatosFamiliaresM();
                         System.out.println("Apartado 5 Generado Exitosamente");
+                    }
+                    
+                    DatosHermanos dh = new DatosHermanos();
+                    if(dh.crear()){
+                        Formulario form = new Formulario(idFormulario, da.consultarReciente(), "1");
+                        form.updateDatosHermanos();
+                        System.out.println("Apartado 1 Generado Exitosamente");
                     }
                     
                     
