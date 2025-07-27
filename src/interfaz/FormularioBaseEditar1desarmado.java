@@ -1765,7 +1765,7 @@ public class FormularioBaseEditar1desarmado extends javax.swing.JFrame {
                 txtComentarioActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtComentario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 3180, 470, 100));
+        CuerpoFormulario.add(txtComentario, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 3180, 480, 100));
 
         txtCalleFamM.setBackground(new java.awt.Color(195, 210, 197));
         txtCalleFamM.addActionListener(new java.awt.event.ActionListener() {
