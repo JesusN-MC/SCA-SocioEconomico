@@ -459,12 +459,12 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     public void apartadoDatosFamiliarF(int id){
         
     }
-    
+    //familiarM
     public void apartadoDatosFamiliarM(int id){
         try{
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
-            
+            //conexion 
             String sql = "SELECT * FROM datosFamiliaresM WHERE id_datosFamiliaresM = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
@@ -483,12 +483,14 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
             txtLocalidadFamM.setText(datos.getString("localidad"));
             txtColoniaFamM.setText(datos.getString("colonia"));
             txtCalleFamM.setText(datos.getString("calle"));
-            txtNumCasaFamM.setText(datos.getString("numeroCasa"));
+            txtNumCasaFamM.setText(datos.getString("numeroCasa")); 
             }
         }catch(Exception e){
             System.out.println("Error al guardar los datos del padre");
         }
+        
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
