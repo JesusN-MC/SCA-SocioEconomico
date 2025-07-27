@@ -461,16 +461,15 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     }
     //familiarM
     public void apartadoDatosFamiliarM(int id){
-        try{
+       try{
             Conexion conexion = new Conexion();
             Connection con = conexion.con;
-            //conexion 
+            
             String sql = "SELECT * FROM datosFamiliaresM WHERE id_datosFamiliaresM = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             
             ResultSet datos = ps.executeQuery();
-            
             if (datos.next()) {
             txtNombresFamM.setText(datos.getString("nombres"));
             txtApaternoFamM.setText(datos.getString("ap"));
