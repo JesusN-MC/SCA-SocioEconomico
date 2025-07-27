@@ -485,10 +485,37 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
             System.out.println("error al Cargar Informacion de datosFamiliaresF");
         }
     }
-    
+    //familiarM
     public void apartadoDatosFamiliarM(int id){
+       try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT * FROM datosFamiliaresM WHERE id_datosFamiliaresM = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet datos = ps.executeQuery();
+            if (datos.next()) {
+            txtNombresFamM.setText(datos.getString("nombres"));
+            txtApaternoFamM.setText(datos.getString("ap"));
+            txtAmaternoFamM.setText(datos.getString("am"));
+            txtEdadFamM.setText(datos.getString("edad"));
+            txtEscolaridadFamM.setText(datos.getString("escolaridad"));
+            txtIngresoFamM.setText(datos.getString("ingresoSemanal"));
+            txtEstadoFamM.setText(datos.getString("estado"));
+            txtMunicipioFamM.setText(datos.getString("municipio"));
+            txtLocalidadFamM.setText(datos.getString("localidad"));
+            txtColoniaFamM.setText(datos.getString("colonia"));
+            txtCalleFamM.setText(datos.getString("calle"));
+            txtNumCasaFamM.setText(datos.getString("numeroCasa")); 
+            }
+        }catch(Exception e){
+            System.out.println("Error al guardar los datos del padre");
+        }
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
