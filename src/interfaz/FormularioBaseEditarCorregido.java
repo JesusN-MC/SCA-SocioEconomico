@@ -455,7 +455,7 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
         }
         
     }
-    
+     //Esto lo hizo Beilyan
     public void apartadoDatosFamiliarF(int id){
         
         try{
@@ -485,9 +485,34 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
             System.out.println("error al Cargar Informacion de datosFamiliaresF");
         }
     }
-    
+    //Esto lo hizo Sergio
     public void apartadoDatosFamiliarM(int id){
-        
+        try{
+            Conexion conexion = new Conexion();
+            Connection con = conexion.con;
+            
+            String sql = "SELECT * FROM datosFamiliaresM WHERE id_datosFamiliaresM = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            ResultSet datos = ps.executeQuery();
+            if (datos.next()) {
+            txtNombresFamM.setText(datos.getString("nombres"));
+            txtApaternoFamM.setText(datos.getString("ap"));
+            txtAmaternoFamM.setText(datos.getString("am"));
+            txtEdadFamM.setText(datos.getString("edad"));
+            txtEscolaridadFamM.setText(datos.getString("escolaridad"));
+            txtIngresoFamM.setText(datos.getString("ingresoSemanal"));
+            txtEstadoFamM.setText(datos.getString("estado"));
+            txtMunicipioFamM.setText(datos.getString("municipio"));
+            txtLocalidadFamM.setText(datos.getString("localidad"));
+            txtColoniaFamM.setText(datos.getString("colonia"));
+            txtCalleFamM.setText(datos.getString("calle"));
+            txtNumCasaFamM.setText(datos.getString("numeroCasa")); 
+            }
+        }catch(Exception e){
+            System.out.println("Error al guardar los datos del padre");
+        }
     }
 
     /**
@@ -698,7 +723,7 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         txtInfoTraslado = new javax.swing.JTextArea();
         jLabel93 = new javax.swing.JLabel();
-        txtColoniaFamM1 = new javax.swing.JTextField();
+        txtColoniaFamM = new javax.swing.JTextField();
         jLabel96 = new javax.swing.JLabel();
         txtCuantosHermanos = new javax.swing.JTextField();
         jLabel97 = new javax.swing.JLabel();
@@ -1942,13 +1967,13 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
         jLabel93.setText("Colonia:");
         CuerpoFormulario.add(jLabel93, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 2980, 60, -1));
 
-        txtColoniaFamM1.setBackground(new java.awt.Color(195, 210, 197));
-        txtColoniaFamM1.addActionListener(new java.awt.event.ActionListener() {
+        txtColoniaFamM.setBackground(new java.awt.Color(195, 210, 197));
+        txtColoniaFamM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtColoniaFamM1ActionPerformed(evt);
+                txtColoniaFamMActionPerformed(evt);
             }
         });
-        CuerpoFormulario.add(txtColoniaFamM1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 3010, 240, 30));
+        CuerpoFormulario.add(txtColoniaFamM, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 3010, 240, 30));
 
         jLabel96.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel96.setText("¿Cuántos hermanos tiene?");
@@ -2001,9 +2026,9 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCuantosHermanosActionPerformed
 
-    private void txtColoniaFamM1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaFamM1ActionPerformed
+    private void txtColoniaFamMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaFamMActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtColoniaFamM1ActionPerformed
+    }//GEN-LAST:event_txtColoniaFamMActionPerformed
 
     private void txtPiezasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPiezasActionPerformed
         // TODO add your handling code here:
@@ -2538,7 +2563,7 @@ public class FormularioBaseEditarCorregido extends javax.swing.JFrame {
     private javax.swing.JTextField txtCantIntegrantes;
     private javax.swing.JTextField txtColoniaAlumno;
     private javax.swing.JTextField txtColoniaFamF;
-    private javax.swing.JTextField txtColoniaFamM1;
+    private javax.swing.JTextField txtColoniaFamM;
     private javax.swing.JTextField txtComentario;
     private javax.swing.JTextField txtCompartidoCon;
     private javax.swing.JTextField txtCosteaGastos;
