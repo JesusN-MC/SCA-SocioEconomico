@@ -25,7 +25,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author jobno
  */
-public class FormularioBaseEditar extends javax.swing.JFrame {
+public class VerFormularioBaseEditar extends javax.swing.JFrame {
     JFrame regresa;
     String idAt;
     int idFormulario;
@@ -36,12 +36,12 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         id_datosFamiliaresM;
     
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FormularioBaseEditar.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VerFormularioBaseEditar.class.getName());
 
     /**
      * Creates new form MenuEstudiantes
      */
-    public FormularioBaseEditar(JFrame pantalla, String idAtencion) {
+    public VerFormularioBaseEditar(JFrame pantalla, String idAtencion) {
         idAt = idAtencion;
         regresa = pantalla;
         initComponents();
@@ -1035,9 +1035,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
 
         jPanel5 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        BotonCancelar = new javax.swing.JButton();
-        botonGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -1242,33 +1240,12 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(43, 138, 127));
 
-        jButton3.setBackground(new java.awt.Color(63, 164, 218));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("Completar formulario");
-        jButton3.setBorderPainted(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar.setBackground(new java.awt.Color(83, 178, 167));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/regresar.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        BotonCancelar.setBackground(new java.awt.Color(255, 102, 102));
-        BotonCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        BotonCancelar.setText("Cancelar");
-        BotonCancelar.setBorderPainted(false);
-        BotonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BotonCancelarActionPerformed(evt);
-            }
-        });
-
-        botonGuardar.setBackground(new java.awt.Color(153, 255, 153));
-        botonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        botonGuardar.setText("Guardar Avance");
-        botonGuardar.setBorderPainted(false);
-        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonGuardarActionPerformed(evt);
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -1277,27 +1254,20 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(BotonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(botonGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
+                .addContainerGap()
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(744, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(botonGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BotonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         jPanel5.add(jPanel3);
-        jPanel3.setBounds(0, 480, 760, 40);
+        jPanel3.setBounds(0, 480, 790, 40);
 
         jPanel4.setBackground(new java.awt.Color(43, 138, 127));
 
@@ -2850,52 +2820,11 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaActionPerformed
 
-    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
-        // TODO add your handling code here:
-        capturaDatos();
-        System.out.println("si presiona");
-        
-    }//GEN-LAST:event_botonGuardarActionPerformed
-
-    private void BotonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCancelarActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
         regresa.setVisible(true);
         dispose();
-    }//GEN-LAST:event_BotonCancelarActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        
-        int respuesta = JOptionPane.showConfirmDialog(
-        null,
-        "¿Deseas completar el formulario?",
-        "Completar Formulario",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.QUESTION_MESSAGE
-        );
-
-        if (respuesta == JOptionPane.YES_OPTION) {
-            try{
-                capturaDatos();
-                Conexion conexion = new Conexion();
-                Connection con = conexion.con;
-
-                String sql = "UPDATE atencion SET estatus = '2' WHERE idAtencion = ?";
-                PreparedStatement ps = con.prepareStatement(sql);
-                ps.setString(1, idAt);
-                
-                ps.executeUpdate();
-                
-                showMessageDialog(null, "Formulario Completado de Manera Exitosa");
-                
-                regresa.setVisible(true);
-                dispose();
-            }catch(Exception e){
-                showMessageDialog(null, "Error al Completar Formulario" + e.getMessage());
-            }
-        }
-           
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2930,8 +2859,7 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BotonCancelar;
-    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JTextField carrera1;
     private javax.swing.JCheckBox cbxAbanico;
     private javax.swing.JCheckBox cbxAguaDrenaje;
@@ -2957,7 +2885,6 @@ public class FormularioBaseEditar extends javax.swing.JFrame {
     private javax.swing.JTextField familiar1;
     private javax.swing.JTextField fecha;
     private javax.swing.JTextField grupo1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

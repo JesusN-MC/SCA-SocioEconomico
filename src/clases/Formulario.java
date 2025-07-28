@@ -65,6 +65,7 @@ public class Formulario {
             return true;
             
         }catch(Exception e){
+            e.printStackTrace();
             showMessageDialog(null, "Error al crear el Formulario");
             return false;
         }

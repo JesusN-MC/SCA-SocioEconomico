@@ -571,9 +571,9 @@ public class VerAtencion extends javax.swing.JFrame {
 
     private void botonFormularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFormularioActionPerformed
         // TODO add your handling code here:
-        FormularioBaseEditar form = new FormularioBaseEditar(this, idAtencionNueva);
-        form.setVisible(true);
-        form.setLocationRelativeTo(null);
+        VerFormularioBaseEditar form2 = new VerFormularioBaseEditar(this , idAtencionNueva);
+        form2.setVisible(true);
+        form2.setLocationRelativeTo(null);
         this.setVisible(false);
     }//GEN-LAST:event_botonFormularioActionPerformed
 

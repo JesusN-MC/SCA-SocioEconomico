@@ -198,7 +198,6 @@ public class MenuSolicitudes extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        botonAtenciones = new javax.swing.JButton();
         botonSolicitudes = new javax.swing.JButton();
         botonEstudiantes = new javax.swing.JButton();
         btnBusqueda = new javax.swing.JButton();
@@ -230,17 +229,6 @@ public class MenuSolicitudes extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(168, 204, 193));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        botonAtenciones.setBackground(new java.awt.Color(204, 204, 204));
-        botonAtenciones.setFont(new java.awt.Font("Poppins Medium", 0, 12)); // NOI18N
-        botonAtenciones.setText("Atenciones");
-        botonAtenciones.setMargin(new java.awt.Insets(2, 0, 3, 0));
-        botonAtenciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonAtencionesActionPerformed(evt);
-            }
-        });
-        jPanel2.add(botonAtenciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 100, 27));
 
         botonSolicitudes.setBackground(new java.awt.Color(80, 80, 80));
         botonSolicitudes.setFont(new java.awt.Font("Poppins Medium", 0, 14)); // NOI18N
@@ -317,16 +305,6 @@ public class MenuSolicitudes extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void botonAtencionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAtencionesActionPerformed
-        // TODO add your handling code here:
-        MenuAtenciones ver = new MenuAtenciones();
-            //Indicamos que se hace visible
-            ver.setVisible(true);
-            ver.setLocationRelativeTo(null);
-            //cerramos esta ventana
-            dispose();
-    }//GEN-LAST:event_botonAtencionesActionPerformed
-
     private void botonSolicitudesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonSolicitudesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_botonSolicitudesActionPerformed
@@ -384,7 +362,6 @@ public class MenuSolicitudes extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botonAtenciones;
     private javax.swing.JButton botonEstudiantes;
     private javax.swing.JButton botonSolicitudes;
     private javax.swing.JButton btnBusqueda;

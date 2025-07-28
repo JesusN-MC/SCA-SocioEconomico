@@ -23,6 +23,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author Lizbeth
  */
 public class EditarAtencion extends javax.swing.JFrame {
+    String est;
     JFrame regresar;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EditarAtencion.class.getName());
     boolean existe;
@@ -144,6 +145,7 @@ public class EditarAtencion extends javax.swing.JFrame {
             
             //PENDIENTE EL ESTATUS 
             String estatus = datos.getString("estatus");
+            est = estatus;
             comboEstatus.removeAllItems();
             if(estatus.equals("1")){
                 comboEstatus.addItem("Formulario Pendiente");
@@ -672,10 +674,18 @@ public class EditarAtencion extends javax.swing.JFrame {
 
     private void botonFormularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonFormularioActionPerformed
         // TODO add your handling code here:
-        FormularioBaseEditar form = new FormularioBaseEditar(this , idAtencionNueva);
-        form.setVisible(true);
-        form.setLocationRelativeTo(null);
-        this.setVisible(false);
+        if(est.equals("1")){
+            FormularioBaseEditar form = new FormularioBaseEditar(this , idAtencionNueva);
+            form.setVisible(true);
+            form.setLocationRelativeTo(null);
+            this.setVisible(false);
+        }else{
+            VerFormularioBaseEditar form2 = new VerFormularioBaseEditar(this , idAtencionNueva);
+            form2.setVisible(true);
+            form2.setLocationRelativeTo(null);
+            this.setVisible(false);
+        }
+        
     }//GEN-LAST:event_botonFormularioActionPerformed
 
     private void comboEstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEstatusActionPerformed
